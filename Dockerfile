@@ -34,7 +34,6 @@ ADD 30-xdebug-custom.ini /etc/php/7.1/cli/conf.d/
 # install git
 RUN apt-get --yes --force-yes install git
 
-RUN apt-get --yes --force-yes apt-get install net-tools
 
 # install supervisord
 RUN apt-get install -y supervisor
