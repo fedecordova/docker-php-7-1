@@ -14,6 +14,15 @@ ADD ondrej-ubuntu-php-xenial.list /etc/apt/sources.list.d/
 RUN apt-get update -y
 
 
+# install mailcatcher
+RUN apt-get install -y sqlite3 libsqlite3-dev build-essential curl
+RUN apt-get upgrade -y
+RUN gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
+RUN \curl -sSL https://get.rvm.io | bash -s stable
+RUN /bin/bash -c "source /usr/local/rvm/scripts/rvm && rvm install 2.2.4"
+RUN /bin/bash -c "source /usr/local/rvm/scripts/rvm && rvm use 2.2.4 --default"
+RUN /bin/bash -c "source /usr/local/rvm/scripts/rvm && gem install mailcatcher"
+
 
 # install http
 RUN apt-get install -y apache2 vim bash-completion unzip
@@ -33,6 +42,14 @@ ADD 30-xdebug-custom.ini /etc/php/7.1/cli/conf.d/
 
 # install git
 RUN apt-get --yes --force-yes install git
+
+#RUN ssh-keygen -q -N "" -t dsa -f /etc/ssh/ssh_host_dsa_key && ssh-keygen -q -N "" -t rsa -f /etc/ssh/ssh_host_rsa_key
+RUN sed -ri 's/PermitRootLogin without-password/PermitRootLogin yes/g' /etc/ssh/sshd_config
+RUN echo 'root:changeme' | chpasswd
+
+# Put your own public key at id_rsa.pub for key-based login.
+RUN mkdir -p /root/.ssh && touch /root/.ssh/authorized_keys && chmod 700 /root/.ssh
+#ADD id_rsa.pub /root/.ssh/authorized_keys
 
 
 # install supervisord
