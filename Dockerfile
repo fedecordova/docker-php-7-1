@@ -15,6 +15,7 @@ RUN apt-get update -y
 
 
 # install mailcatcher
+RUN apt-get install -y libssl1.0.2 libssl-dev --allow-unauthenticated
 RUN apt-get install -y sqlite3 libsqlite3-dev build-essential curl
 
 RUN gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
