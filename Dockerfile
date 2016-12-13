@@ -43,6 +43,10 @@ ADD 30-xdebug-custom.ini /etc/php/7.1/cli/conf.d/
 # install git
 RUN apt-get --yes --force-yes install git
 
+# install sshd
+RUN apt-get install -y openssh-server openssh-client passwd
+RUN mkdir -p /var/run/sshd
+
 #RUN ssh-keygen -q -N "" -t dsa -f /etc/ssh/ssh_host_dsa_key && ssh-keygen -q -N "" -t rsa -f /etc/ssh/ssh_host_rsa_key
 RUN sed -ri 's/PermitRootLogin without-password/PermitRootLogin yes/g' /etc/ssh/sshd_config
 RUN echo 'root:changeme' | chpasswd
