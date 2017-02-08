@@ -1,7 +1,16 @@
 # LAMP docker container with php 7.1
 
 Features
-* xdebug
+* Ubuntu 16.04
+* Apache
+* Php 7.0
+* MySQL 5.7
+* Microsoft SQL Server (180 day evaluation)
+* Microsoft ODBC driver for SQL Server
+* XDebug
+* Email Catcher
+* SSH
+
 
 ## Install
 
