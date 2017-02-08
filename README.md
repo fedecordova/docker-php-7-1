@@ -3,7 +3,7 @@
 Features
 * Ubuntu 16.04
 * Apache
-* Php 7.0
+* Php 7.1
 * MySQL 5.7
 * Microsoft SQL Server (180 day evaluation)
 * Microsoft ODBC driver for SQL Server
