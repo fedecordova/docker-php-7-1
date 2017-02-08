@@ -76,6 +76,9 @@ RUN locale-gen en_US en_US.UTF-8 && dpkg-reconfigure locales
 RUN ln /opt/mssql-tools/bin/sqlcm* /bin/sqlcmd
 
 
+RUN echo "export TERM=xterm" >> ~/.bashrc
+
+
 # install supervisord
 RUN apt-get install -y supervisor
 RUN mkdir -p /var/log/supervisor
