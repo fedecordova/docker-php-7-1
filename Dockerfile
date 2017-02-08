@@ -60,12 +60,12 @@ RUN mkdir -p /root/.ssh && touch /root/.ssh/authorized_keys && chmod 700 /root/.
 RUN apt-get install -y apt-transport-https ca-certificates sudo
 RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add -
 RUN curl https://packages.microsoft.com/config/ubuntu/16.04/mssql-server.list > /etc/apt/sources.list.d/mssql-server.list
-RUN apt-get update -y
+RUN apt-get update -y --fix-missing
 RUN apt-get install -y mssql-server
 RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add -
 RUN curl https://packages.microsoft.com/config/ubuntu/16.04/prod.list > /etc/apt/sources.list.d/mssql-release.list
-RUN apt-get update -y && ACCEPT_EULA=Y apt-get install -y msodbcsql mssql-tools
-RUN apt-get install -y unixodbc-dev-*
+RUN apt-get update -y --fix-missing && ACCEPT_EULA=Y apt-get install -y msodbcsql=13.0.1.0-1 mssql-tools
+RUN apt-get install -y unixodbc-dev-utf16
 RUN pecl install sqlsrv
 RUN pecl install pdo_sqlsrv
 ADD 30-mssql.ini /etc/php/7.1/apache2/conf.d/
