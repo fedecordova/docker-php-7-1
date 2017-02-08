@@ -11,7 +11,7 @@ RUN apt-get install -y apache2 curl
 
 ADD ondrej-ubuntu-php-xenial.list /etc/apt/sources.list.d/
 
-RUN apt-get update -y
+RUN apt-get update -y --fix-missing
 
 
 # install mailcatcher
