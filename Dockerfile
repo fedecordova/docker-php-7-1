@@ -64,15 +64,16 @@ RUN apt-get update -y --fix-missing
 RUN apt-get install -y mssql-server
 RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add -
 RUN curl https://packages.microsoft.com/config/ubuntu/16.04/prod.list > /etc/apt/sources.list.d/mssql-release.list
-RUN apt-get update -y --fix-missing && ACCEPT_EULA=Y apt-get install -y msodbcsql=13.0.1.0-1 mssql-tools
-RUN apt-get install -y unixodbc-dev-utf16
+RUN apt-get install -y unixodbc-dev-*
+RUN apt-get update -y --fix-missing && ACCEPT_EULA=Y apt-get install -y mssql-tools
+RUN apt-get update -y --fix-missing && ACCEPT_EULA=Y apt-get install -y msodbcsql
 RUN pecl install sqlsrv
 RUN pecl install pdo_sqlsrv
-ADD 30-mssql.ini /etc/php/7.1/apache2/conf.d/
-ADD 30-mssql.ini /etc/php/7.1/cli/conf.d/
+ADD 30-mssql.ini /etc/php/7.0/apache2/conf.d/
+ADD 30-mssql.ini /etc/php/7.0/cli/conf.d/
 RUN export TERM=xterm && SA_PASSWORD=ChangeMe1 /opt/mssql/bin/sqlservr-setup --accept-eula --set-sa-password
 RUN locale-gen en_US en_US.UTF-8 && dpkg-reconfigure locales
-RUN ln /opt/mssql-tools/bin/sqlcmd-* /bin/sqlcmd
+RUN ln /opt/mssql-tools/bin/sqlcm* /bin/sqlcmd
 
 
 # install supervisord
