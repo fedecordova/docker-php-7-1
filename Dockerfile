@@ -56,6 +56,24 @@ RUN echo 'root:changeme' | chpasswd
 RUN mkdir -p /root/.ssh && touch /root/.ssh/authorized_keys && chmod 700 /root/.ssh
 #ADD id_rsa.pub /root/.ssh/authorized_keys
 
+# Microsoft SQL  Server
+RUN apt-get install -y apt-transport-https ca-certificates sudo
+RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add -
+RUN curl https://packages.microsoft.com/config/ubuntu/16.04/mssql-server.list > /etc/apt/sources.list.d/mssql-server.list
+RUN apt-get update -y
+RUN apt-get install -y mssql-server
+RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add -
+RUN curl https://packages.microsoft.com/config/ubuntu/16.04/prod.list > /etc/apt/sources.list.d/mssql-release.list
+RUN apt-get update -y && ACCEPT_EULA=Y apt-get install -y msodbcsql mssql-tools
+RUN apt-get install -y unixodbc-dev-*
+RUN pecl install sqlsrv
+RUN pecl install pdo_sqlsrv
+ADD 30-mssql.ini /etc/php/7.1/apache2/conf.d/
+ADD 30-mssql.ini /etc/php/7.1/cli/conf.d/
+RUN export TERM=xterm && SA_PASSWORD=ChangeMe1 /opt/mssql/bin/sqlservr-setup --accept-eula --set-sa-password
+RUN locale-gen en_US en_US.UTF-8 && dpkg-reconfigure locales
+RUN ln /opt/mssql-tools/bin/sqlcmd-* /bin/sqlcmd
+
 
 # install supervisord
 RUN apt-get install -y supervisor
