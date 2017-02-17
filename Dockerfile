@@ -75,7 +75,11 @@ RUN export TERM=xterm && SA_PASSWORD=ChangeMe1 /opt/mssql/bin/sqlservr-setup --a
 RUN locale-gen en_US en_US.UTF-8 && dpkg-reconfigure locales
 RUN ln /opt/mssql-tools/bin/sqlcm* /bin/sqlcmd
 
+# Install Codeception
+RUN curl -LsS http://codeception.com/codecept.phar -o /usr/local/bin/codecept
+RUN chmod a+x /usr/local/bin/codecept
 
+# Fix terminal
 RUN echo "export TERM=xterm" >> ~/.bashrc
 
 
