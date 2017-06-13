@@ -8,7 +8,7 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update -y
 
 # Install rsyslog and cron
-RUN apt-get install rsyslog cron
+RUN apt-get install -y rsyslog cron
 
 
 # CURL
