@@ -7,7 +7,12 @@ ENV DEBIAN_FRONTEND noninteractive
 # Update sources
 RUN apt-get update -y
 
-RUN apt-get install -y apache2 curl
+# Install rsyslog and cron
+RUN apt-get install rsyslog cron
+
+
+# CURL
+RUN apt-get install -y curl
 
 ADD ondrej-ubuntu-php-xenial.list /etc/apt/sources.list.d/
 
